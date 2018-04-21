@@ -11,3 +11,4 @@ Assimilation is an altered version of tag where the teams grow
 - Bound edges of simulation
 - Make agents move
 - Make intelligent shots
+- Deal with agent overlapping

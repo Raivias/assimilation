@@ -4,7 +4,7 @@ BULLET_SIZE = 1
 BULLET_SPEED = 10
 
 
-class Bullet():
+class Bullet:
     def __init__(self, creator, team, pose, speed=(0, 0, 0), accel=(0, 0, 0)):
         self.creator = creator
         self.team = team

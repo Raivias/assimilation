@@ -11,6 +11,7 @@ import vector
 
 FPS = 60
 SCREEN_WIDTH, SCREEN_HEIGHT = 900, 600
+SCREEN_COLOR = (255, 255, 255)
 
 
 class Simulation:
@@ -19,7 +20,7 @@ class Simulation:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
         self.clock = pygame.time.Clock()
         self.all_agents = []
-        self.screen.fill((255, 255, 255))
+        self.screen.fill(SCREEN_COLOR)
 
         for n in range(5):
             pose = vector.Vector(random.randrange(50, SCREEN_WIDTH-50), random.randrange(50, SCREEN_HEIGHT-50), 0)
@@ -49,12 +50,13 @@ class Simulation:
         for a in self.all_agents:
             a.draw(self.screen)
         pygame.display.flip()
-        pass
+        return
 
     def run(self):
         while True:
             self.handle_events()
             self.update()
+            self.screen.fill(SCREEN_COLOR)
             self.draw()
             self.clock.tick(FPS)
 

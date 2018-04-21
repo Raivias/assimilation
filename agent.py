@@ -1,5 +1,4 @@
 import math
-import pygame
 import random
 import uuid
 
@@ -9,8 +8,8 @@ from vector import *
 AGENT_SIZE = 15
 
 
-class Agent():
-    def __init__(self, pose, orientation=0, team=None):
+class Agent:
+    def __init__(self, groups, pose, orientation=0, team=None):
         if team is None:
             team = (
                 random.randrange(80, 250),
@@ -27,7 +26,6 @@ class Agent():
         self.bullets = []
 
     def update(self):
-        self.fire()
         for b in self.bullets:
             b.update()
         return
@@ -59,7 +57,6 @@ class Agent():
         for b in self.bullets:
             b.draw(screen)
         return
-    
 
     def in_view(self, ob):
         ob_ang = math.atan2((ob.pose.b - self.pose.b), (ob.pose.a - self.pose.a))
