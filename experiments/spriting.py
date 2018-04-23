@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+import random
 import sys
 
 FPS = 60
@@ -8,19 +9,28 @@ SCREEN_WIDTH, SCREEN_HEIGHT = 900, 600
 
 class Item(pygame.sprite.Sprite):
     ITEM_SIZE = 15
+    ITEM_SPEED = 1
 
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface((self.ITEM_SIZE, self.ITEM_SIZE))
+        self.image.fill((255, 0, 255))
         self.rect = self.image.get_rect()
-        self.rect.x = 400
-        self.rect.y = 300
-        self.rect.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        self.rect.center = (random.randrange(0, SCREEN_WIDTH), random.randrange(0, SCREEN_HEIGHT))
+        circle = pygame.draw.circle(self.image, (250, 0, 0,), self.rect.center, 10)
+        self.image.fill((0, 255, 255), circle)
+        return
+
+    def draw(self):
         pygame.draw.circle(self.image, (250, 0, 0,), self.rect.center, self.ITEM_SIZE)
         return
 
     def update(self):
-        self.rect.x += 5
+        if self.rect.x != SCREEN_WIDTH / 2:
+            self.rect.x += self.ITEM_SPEED * -1 if self.rect.x >= (SCREEN_WIDTH / 2) else self.ITEM_SPEED
+
+        if self.rect.y != SCREEN_HEIGHT / 2:
+            self.rect.y += self.ITEM_SPEED * -1 if self.rect.y >= (SCREEN_HEIGHT / 2) else self.ITEM_SPEED
         return
 
 
@@ -28,11 +38,12 @@ class Sim:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
+        pygame.display.set_caption("Experiment")
         self.clock = pygame.time.Clock()
         self.items = pygame.sprite.Group()
         self.screen.fill((255, 255, 255))
 
-        for _ in range(1):
+        for _ in range(2):
             i = Item()
             self.items.add(i)
 

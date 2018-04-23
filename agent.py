@@ -5,11 +5,12 @@ import uuid
 from bullet import *
 from vector import *
 
-AGENT_SIZE = 15
-
 
 class Agent:
-    def __init__(self, groups, pose, orientation=0, team=None):
+    AGENT_SIZE = 15
+    AGENT_SPEED = 1
+
+    def __init__(self, pose, orientation=0, team=None):
         if team is None:
             team = (
                 random.randrange(80, 250),
@@ -26,17 +27,15 @@ class Agent:
         self.bullets = []
 
     def update(self):
+        if self.pose.a != 900 / 2:
+            self.pose.a += self.AGENT_SPEED * -1 if self.pose.a >= (900 / 2) else self.AGENT_SPEED
+
+        if self.pose.b != 600 / 2:
+            self.pose.b += self.AGENT_SPEED * -1 if self.pose.b >= (600 / 2) else self.AGENT_SPEED
+        if random.random() > 0.5:
+            self.bullets.append(Bullet(self, self.team, self.pose, self.orientation))
         for b in self.bullets:
             b.update()
-        return
-
-    def fire(self):
-        b_speed_x = math.cos(self.orientation) * BULLET_SPEED
-        b_speed_y = math.sin(self.orientation) * BULLET_SPEED
-        b_speed_z = 0
-        b_speed = Vector(b_speed_x, b_speed_y, b_speed_z)
-        b = Bullet(self.name, self.team, self.pose, b_speed)
-        self.bullets.append(b)
         return
     
     def draw(self, screen):
@@ -44,14 +43,14 @@ class Agent:
             screen,
             self.team,
             (int(self.pose.a), int(self.pose.b)),
-            AGENT_SIZE
+            self.AGENT_SIZE
         )
         pygame.draw.line(
             screen,
             (0, 0, 0),
             (int(self.pose.a), int(self.pose.b)),
-            (int(self.pose.a + AGENT_SIZE * math.cos(self.orientation)),
-             int(self.pose.b + AGENT_SIZE * math.sin(self.orientation)))
+            (int(self.pose.a + self.AGENT_SIZE * math.cos(self.orientation)),
+             int(self.pose.b + self.AGENT_SIZE * math.sin(self.orientation)))
         )
 
         for b in self.bullets:
