@@ -1,4 +1,3 @@
-import math
 import random
 import uuid
 
@@ -28,19 +27,12 @@ class Agent:
 
     def update(self, items):
         self.check_hit(items)
-
-        if self.pose.a != 900 / 2:
-            self.pose.a += self.AGENT_SPEED * -1 if self.pose.a >= (900 / 2) else self.AGENT_SPEED
-        if self.pose.b != 600 / 2:
-            self.pose.b += self.AGENT_SPEED * -1 if self.pose.b >= (600 / 2) else self.AGENT_SPEED
-
-        if random.random() > 0.5:
-            self.bullets.append(Bullet(self, self.team, self.pose, self.orientation))
         for b in self.bullets:
             b.update()
         return
     
     def draw(self, screen):
+        self.keep_onscreen(screen, self)
         pygame.draw.circle(
             screen,
             self.team,
@@ -56,6 +48,7 @@ class Agent:
         )
 
         for b in self.bullets:
+            self.keep_onscreen(screen, b)
             b.draw(screen)
         return
 
@@ -69,12 +62,19 @@ class Agent:
                     return True
         return False
 
+    @staticmethod
+    def keep_onscreen(screen, object):
+        width, height = screen.get_size()
+        object.pose.a = object.pose.a % width
+        object.pose.b = object.pose.b % height
+        return
+
     def distance_and_angle_to_object(self, object):
         p = self.pose - object.pose
         distance = math.sqrt(math.pow(p.a, 2) + math.pow(p.b, 2))
         angle = math.atan2(p.b, p.a)
         return distance, angle
 
-    def in_view(self, ob):
-        ob_ang = math.atan2((ob.pose.b - self.pose.b), (ob.pose.a - self.pose.a))
-        # TODO finish this
+    def fire(self):
+        self.bullets.append(Bullet(self, self.team, self.pose, self.orientation))
+        return
