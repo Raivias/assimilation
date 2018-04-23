@@ -7,8 +7,5 @@ Assimilation is an altered version of tag where the teams grow
 3) If an Agent is hit by a bullet it becomes an agent of that team
 
 ## TODO
-- Make bullets impact
 - Bound edges of simulation
-- Make agents move
-- Make intelligent shots
-- Deal with agent overlapping
+- Make intelligent agents

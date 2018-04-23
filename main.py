@@ -42,7 +42,7 @@ class Simulation:
 
     def update(self):
         for a in self.all_agents:
-            a.update()
+            a.update(self.all_agents)
         return
 
     def draw(self):
