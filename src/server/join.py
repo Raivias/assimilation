@@ -2,4 +2,6 @@ class Join:
     """
     Class that handles users coming an leaving
     """
-    pass
+    def __init__(self, port):
+        self.port = port
+        pass
