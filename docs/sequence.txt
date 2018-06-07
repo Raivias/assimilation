@@ -1,0 +1,67 @@
+@startuml
+participant assimilation
+participant players as pl
+participant listeners
+participant join
+participant move
+collections agents
+collections observers
+
+== Initialize ==
+[-> assimilation
+assimilation -> pl : make list
+assimilation ->> join : open port
+
+== player joins ==
+agents -> join : add to game
+activate join
+join -> pl : add player to list
+activate pl
+pl --> join : added
+deactivate pl
+join --> agents : ACK
+deactivate join
+
+== observer joins ==
+observers -> join : add to game
+activate join
+join -> listeners : add listener to list
+activate listeners
+listeners --> join : added
+deactivate listeners
+join --> observers : ACK
+deactivate join
+
+== game play ==
+loop
+  assimilation -> pl : get players
+  activate assimilation
+  activate pl
+  pl --> assimilation : players
+  deactivate pl
+  alt no players
+    assimilation -> pl : subscribe to change event
+    pl -> assimilation : player added
+    assimilation -> assimilation : back to top of loop
+  end
+
+  create move
+  assimilation -> move : Get player moves
+  activate move
+  move -> agents : GET move
+  activate agents
+  agents --> move : return move
+  deactivate agents
+  move -> move : collect all moves
+  move -> assimilation : return moves
+  destroy move
+  assimilation -> assimilation : apply logic
+  assimilation -> pl  : save new states
+  activate pl
+  pl --> assimilation : saved
+  deactivate pl
+  deactivate assimilation
+end
+
+
+@enduml

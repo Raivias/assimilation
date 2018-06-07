@@ -1,0 +1,18 @@
+@startuml
+title: Assimilation!
+
+[assimilation]
+() "agent"
+[join]
+[player list] as pl
+[player]
+[move]
+
+agent --> join
+join --> pl
+player --> pl
+assimilation <-- pl
+assimilation --> move
+move <--> agent
+
+@enduml
