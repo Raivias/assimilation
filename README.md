@@ -7,7 +7,7 @@ Assimilation is an altered version of tag where the teams grow
 3) If an Agent is hit by a bullet it becomes an agent of that team
 
 ## System Flow
-[Sequence](/docs/sequence.png)
+![Sequence](/docs/sequence.png)
 
 1) Initialize Server   
 2) If no agents wait for agents to join   
