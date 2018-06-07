@@ -21,10 +21,6 @@ agents -> join : add to game
 activate join
 join -> pl : add player to list
 activate pl
-pl -> assimilation : add new player to buffer
-activate assimilation
-assimilation --> pl : player added
-deactivate assimilation
 pl --> join : added
 deactivate pl
 join --> agents : ACK
@@ -42,8 +38,13 @@ deactivate join
 
 == game play ==
 loop
-  assimilation -> map : add new players
+  assimilation -> pl : get players
   activate assimilation
+  activate pl
+  pl --> assimilation
+  deactivate pl
+
+  assimilation -> map : add new players
   activate map
   map --> assimilation : new map state
   deactivate map
@@ -67,10 +68,10 @@ loop
   map --> assimilation : new state
   deactivate map
 
-  assimilation -> assimilation : apply logic
+  assimilation -> assimilation : apply additional logic (end game)
   assimilation -> map : save new state as map
 
-  assimilation -> listeners : update listeners
+  assimilation -> listeners : update with new state
   activate listeners
   create updatestate
   listeners -> updatestate : send update
