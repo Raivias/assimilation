@@ -1,9 +1,11 @@
 @startuml
 participant assimilation
+participant map
 participant players as pl
 participant listeners
 participant join
 participant move
+participant updatestate
 collections agents
 collections observers
 
@@ -11,12 +13,18 @@ collections observers
 [-> assimilation
 assimilation -> pl : make list
 assimilation ->> join : open port
+create map
+assimilation -> map : create initial state
 
 == player joins ==
 agents -> join : add to game
 activate join
 join -> pl : add player to list
 activate pl
+pl -> assimilation : add new player to buffer
+activate assimilation
+assimilation --> pl : player added
+deactivate assimilation
 pl --> join : added
 deactivate pl
 join --> agents : ACK
@@ -34,32 +42,44 @@ deactivate join
 
 == game play ==
 loop
-  assimilation -> pl : get players
+  assimilation -> map : add new players
   activate assimilation
-  activate pl
-  pl --> assimilation : players
-  deactivate pl
-  alt no players
-    assimilation -> pl : subscribe to change event
-    pl -> assimilation : player added
-    assimilation -> assimilation : back to top of loop
-  end
+  activate map
+  map --> assimilation : new map state
+  deactivate map
 
+  assimilation -> map : get next state
+  activate map
+  map -> pl : get move
+  activate pl
   create move
-  assimilation -> move : Get player moves
+  pl -> move : Get player moves
   activate move
   move -> agents : GET move
   activate agents
   agents --> move : return move
   deactivate agents
   move -> move : collect all moves
-  move -> assimilation : return moves
+  move -> pl : return moves
   destroy move
-  assimilation -> assimilation : apply logic
-  assimilation -> pl  : save new states
-  activate pl
-  pl --> assimilation : saved
+  pl --> map : player moves
   deactivate pl
+  map --> assimilation : new state
+  deactivate map
+
+  assimilation -> assimilation : apply logic
+  assimilation -> map : save new state as map
+
+  assimilation -> listeners : update listeners
+  activate listeners
+  create updatestate
+  listeners -> updatestate : send update
+  activate updatestate
+  updatestate ->> observers : send update
+  updatestate --> listeners : sent
+  destroy updatestate
+  listeners --> assimilation
+  deactivate listeners
   deactivate assimilation
 end
 
