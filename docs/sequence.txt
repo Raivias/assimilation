@@ -12,6 +12,7 @@ collections observers
 == Initialize ==
 [-> assimilation
 assimilation -> pl : make list
+assimilation -> listeners : make listeners
 assimilation ->> join : open port
 create map
 assimilation -> map : create initial state

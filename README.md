@@ -30,26 +30,8 @@ Assimilation is an altered version of tag where the teams grow
 
 6) Go back to 2
 
+## Objects
+![Class](/docs/class.png) 
+
 ## More Info
 [APIs](/docs/apis.md)
-
-## Objects
-Communications
-- IJoinAPI
-- JoinAPI : IJoinAPI
-- IStateUpdateAPI
-- StateUpdateAPI: IStateUpdateAPI
-
-Map Objects
-- IMap
-- Map : IMap
-- IItem
-  - speed limit
-  - location
-  - size
-- AgentFactory
-- IAgent :IItem
-- Agent : IAgent
-- BulletFactory
-- IBullet : IItem
-- Bullet : IBullet

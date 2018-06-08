@@ -2,13 +2,13 @@
 Set a up api
 Msgs that I need to have interaction:
 Agent -> Server
-- Join
+- POST Join
 #TODO
 - Quit
 #TODO
 
 Server -> Agent
-- AgentMove
+- GET Move
 send
 ``` javascript
 {
@@ -67,11 +67,6 @@ return
    }
 }
 ```
-> Should agents have names?
-
-- Dead
 
 Server -> Observer
-- MapUpdate
-
-> Note: I can compare intersections to check for conflicts/impacts (if agents hit eachother they should die, or maybe only if it's on a different team?)
+- PUT UpdateState

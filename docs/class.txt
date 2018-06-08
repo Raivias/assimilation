@@ -1,0 +1,109 @@
+@startuml
+title: Assimilation Classes
+class Assimilation{
+- map
+- players
++ Start()
+}
+
+class Map {
+ - mapObjects
+ + AddPlayer()
+ + NextState()
+}
+
+class Shape {
+  - radius
+}
+
+interface MapObject {
+ - location
+ - shape
+ - limits
+ + Move()
+}
+
+class Agent {
+ - location
+ - shape
+ - limits
+ - team
+ - fire()
+ + Move()
+}
+
+class Bullet {
+ - location
+ - shape
+ - limits
+ + Move()
+}
+
+class Limits {
+  - maxSpeed
+}
+
+class Players {
+ - players
+ + GetPlayers()
+ + AddPlayer()
+ + RemovePlayer()
+}
+
+class Player {
+ - connectionInfo
+}
+
+class Listeners {
+ - listeners
+ + GetListeners()
+ + AddListener()
+ + RemoveListener()
+}
+
+class Listener {
+ - connectionInfo
+ + UpdateState()
+}
+
+class Join {
+ + Join()
+ + Quit()
+}
+note left of Join : "Can this be put into Players and Listeners?"
+
+class Move {
+
+}
+
+class UpdateState {
+
+}
+
+Assimilation --> Map
+Assimilation --> Join
+Assimilation --> Players
+Assimilation --> Listeners
+
+Map --> MapObject
+
+MapObject <|-- Agent
+MapObject <|-- Bullet
+
+Bullet --> Limits
+Bullet --> Shape
+
+Agent --> Shape
+Agent --> Limits
+Agent --> Move
+
+Players --> Player
+Listeners --> Listener
+
+Listener --> UpdateState
+
+Join --> Player
+Join --> Players
+Join --> Listener
+Join --> Listeners
+@enduml
