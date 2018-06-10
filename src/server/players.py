@@ -1,7 +1,7 @@
 from enum import Enum, unique
 
 
-class PlayerList:
+class Players:
     """
     Players of current game
     """

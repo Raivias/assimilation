@@ -12,6 +12,7 @@ class AssimilationServer:
         :param port: Port to open communications on.
         """
         self.port = port
+        self.map = Map()
         return
 
     def start(self):
