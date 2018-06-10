@@ -24,6 +24,7 @@ interface MapObject {
 }
 
 class Agent {
+ - player
  - location
  - shape
  - limits
@@ -96,6 +97,7 @@ Bullet --> Shape
 Agent --> Shape
 Agent --> Limits
 Agent --> Move
+Agent --> Player
 
 Players --> Player
 Listeners --> Listener

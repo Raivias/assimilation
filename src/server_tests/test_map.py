@@ -93,10 +93,23 @@ class TestMap(TestCase):
         self.assertIsInstance(n, Map)
         self.assertEqual(len(n.objects), len(m.objects))
 
+    def test_different_objects_copy(self):
+        # TODO this test currently fails because the mock is detected as a non-MapObject
+        mo1 = MagicMock(MapObject)
+        mo2 = MagicMock(MapObject)
+        mo3 = MagicMock(MapObject)
+        ret0 = [mo1, mo2]
+        ret1 = [mo1, mo3]
+        mo1.move = MagicMock(return_value=ret1)
+        mo2.move = MagicMock(return_value=ret0)
+        m = Map(ret0)
+        m.next_state()
+        mo2.move.assert_called_once_with(ret0)
+
 
 class TestMapObject(TestCase):
     def test_init_no_problems(self):
-        loc = MagicMock(Location)
+        loc = MagicMock(Location2D)
         s = MagicMock(Shape)
         lim = MagicMock(Limits)
         with self.assertRaisesRegex(TypeError, "Can't instantiate abstract class MapObject with abstract methods move"):

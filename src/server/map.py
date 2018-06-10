@@ -1,5 +1,6 @@
 import abc
 
+
 class Map:
     def __init__(self, objects=None):
         if objects is None:
@@ -21,16 +22,17 @@ class Map:
         return True
 
     def next_state(self):
-        obs = []
+        obs_1 = []
         for ob in self.objects:
-            obs.append(ob.move())
-        new_map = Map(obs)
+            obs_0 = self.objects.copy()
+            obs_1.append(ob.move(obs_0))
+        new_map = Map(obs_1)
         return new_map
 
 
 class MapObject(abc.ABC):
     def __init__(self, location, shape, limits):
-        if not isinstance(location, Location):
+        if not isinstance(location, Location2D):
             raise TypeError("location was not of type Location")
         self.location = location
 
@@ -43,23 +45,20 @@ class MapObject(abc.ABC):
         self.limits = limits
 
     @abc.abstractmethod
-    def move(self):
-        return MapObject(self.location, self.shape, self.limits)
+    def move(self, current_state):
+        raise NotImplemented()
 
 
-class Shape:
-    # TODO
-    def __init__(self):
-        pass
+class Shape(abc.ABC):
+    pass
 
 
-class Location:
-    # TODO
-    def __init__(self):
-        pass
+class Location2D:
+    def __init__(self, x=0, y=0):
+        self.x = x
+        self.y = y
 
 
 class Limits:
-    # TODO
-    def __init__(self):
-        pass
+    def __init__(self, max_speed=5):
+        self.max_speed = max_speed
