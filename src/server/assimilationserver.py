@@ -27,6 +27,7 @@ class AssimilationServer:
             print(ob)
         return 0
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Starts a server version of Assimulation.")
     # parser.add_argument("-p", "--port", help="Port number to open the game on", type=int)
