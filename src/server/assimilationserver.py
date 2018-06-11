@@ -1,6 +1,10 @@
 import argparse
 import sys
 
+import map
+import agent
+import location
+
 
 class AssimilationServer:
     """
@@ -12,30 +16,23 @@ class AssimilationServer:
         :param port: Port to open communications on.
         """
         self.port = port
-        self.map = Map()
+        agents = []
+        for i in range(1,5):
+            agents.append(agent.TestAgent(location=location.Location2D(i,i), shape=agent.TestAgentShape(), limits=agent.TestLimits()))
+        self.map = map.Map(agents)
         return
 
     def start(self):
-        """
-        Kick it off
-        :return: error code if anything goes wrong
-        """
-        print("Port:\t%d" % self.port)
-        running = True
-        # TODO open join connection
-        while running:
-            continue
-            # TODO open port and wait for people to join
-            # TODO
+        for ob in self.map.objects:
+            print(ob)
         return 0
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Starts a server version of Assimulation.")
-    parser.add_argument("-p", "--port", help="Port number to open the game on", type=int)
+    # parser.add_argument("-p", "--port", help="Port number to open the game on", type=int)
 
     args = parser.parse_args()
 
-    server = AssimilationServer(args.port)
+    server = AssimilationServer(2)
     ecode = server.start()
     sys.exit(ecode)
