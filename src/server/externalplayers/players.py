@@ -36,22 +36,11 @@ class Player:
     """
     Player
     """
-    def __init__(self, address, port, p_type):
-        self.address = address
+    def __init__(self, host, port, p_type):
+        self.host = host
         self.port = port
         self.p_type = p_type
 
-
-class Agent(Player):
-    def __init__(self):
-        # TODO finish this
-        pass
-
-
-class Observer(Player):
-    def __init__(self):
-        # TODO finish this
-        pass
 
 @unique
 class PlayerType(Enum):

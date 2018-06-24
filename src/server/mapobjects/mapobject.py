@@ -1,8 +1,8 @@
 import abc
 
-from limits import Limits
-from location import Location2D
-from shape import Shape
+from mapobjects.limits import Limits
+from mapobjects.location import Location2D
+from mapobjects.shape import Shape
 
 
 class MapObject(abc.ABC):

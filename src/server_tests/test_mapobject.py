@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import MagicMock
-from server.mapobject import *
+from mapobjects.mapobject import *
 
 
 class TestMapObject(TestCase):

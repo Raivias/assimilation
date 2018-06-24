@@ -1,4 +1,4 @@
-from mapobject import *
+from mapobjects.mapobject import *
 
 
 class Map:
