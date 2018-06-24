@@ -19,10 +19,12 @@ class Players:
         self.players.append(player)
         return True
 
-    def get_players(self, p_type):
+    def get_players(self, p_type=None):
+        # TODO make deep copies
+        if p_type is None:
+            return self.players
         if type(p_type) != type(PlayerType):
             raise TypeError("Bad type %s" % type(PlayerType))
-        # TODO turn into generator
         ret = []
         for p in self.players:
             if p.p_type == p_type:
